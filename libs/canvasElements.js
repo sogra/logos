@@ -18,3 +18,10 @@ function drawLine(x1,y1,x2,y2) {
     vars.context.lineTo(x2,y2);
     vars.context.stroke();
 }
+
+/***
+* Returns a random integer
+*/
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }

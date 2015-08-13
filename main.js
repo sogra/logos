@@ -11,7 +11,10 @@ var movingParticles = movingParticles || {};
     vars = {
         canvas : {},
         context : {},
-		particles : [],        
+		particles : [],
+		canvasWidth : 0,
+		canvasHeight : 0,
+		movingDirection : '',
 
         particle : {
 			x : 0,
@@ -26,18 +29,29 @@ var movingParticles = movingParticles || {};
      * TODO: randomize x, y and color
      */
     function generateParticles (amountOfParticles){
-    	var i = 0,
-    		newParticle = {};
 
-    	for (i=0;i<amountOfParticles;i++){
-    		newParticle = {
-    			x : 0,
-    			y : i,
+    	for (var i=0;i<amountOfParticles;i++){
+    		vars.particles [i] = {
+    			x : i*3,
+    			y : i*4,
     			// y : i*5,
     			radius : 2,
-    			color : '#00'+i+'000'
-    		}
-    		vars.particles.push(newParticle);
+    			color : '#00'+i+'000',
+    			'opacity' : getRandomInt(50,100)/100
+    		};
+    	}
+    }
+
+	/***
+     * Draw all contens from the Particles array
+     */
+    function drawParticles (){
+    	var i = 0,
+    		particle = {};
+
+    	for (i=0;i<vars.particles.length;i++){
+    		particle = vars.particles[i];
+    		drawDot(particle.x, particle.y, 1, '#001100', 1);
     	}
     }
 
@@ -50,8 +64,9 @@ var movingParticles = movingParticles || {};
 
     	for (i=0;i<vars.particles.length;i++){
     		particle = vars.particles[i];
-    		particle.x++;
-    		console.log('hla');console.log(particle.x);
+    		if (particle.x < vars.canvasWidth) {
+	    		particle.x++;
+    		}
     	}
     }
 
@@ -64,19 +79,8 @@ var movingParticles = movingParticles || {};
         vars.context.clearRect(0, 0, vars.canvas.width, vars.canvas.height);
 
         updateParticles();
-
-        // // calculate the new X and Y position of each circle
-        // var dot1x = vars.circle1.x + vars.radius * Math.cos(vars.circle1.angle),
-        //     dot1y = vars.circle1.y + vars.radius * Math.sin(vars.circle1.angle),
-        //     dot2x = vars.circle2.x + vars.radius * Math.cos(vars.circle2.angle),
-        //     dot2y = vars.circle2.y + vars.radius * Math.sin(vars.circle2.angle);
-       
-        // // draws the two dots
-        // drawDot(dot1x, dot1y, 2);
-        // drawDot(dot2x, dot2y, 2);
-        // drawDot(vars.circle1.x, vars.circle1.y,vars.radius);
-        // drawDot(vars.circle2.x, vars.circle2.y,vars.radius);
-
+        drawParticles();
+ 
         // var distanceBetweenDots = distance(dot1x,dot1y,dot2x,dot2y);
 
         // if(distanceBetweenDots < 232) {
@@ -92,11 +96,13 @@ var movingParticles = movingParticles || {};
     function init () {
         vars.canvas = document.getElementById("logoCanvas"),
         vars.context = vars.canvas.getContext('2d');
+        vars.canvasWidth = vars.canvas.clientWidth;
+        vars.canvasHeight = vars.canvas.clientHeight;
 
         generateParticles(10);
 		console.log(vars.particles);
 
-        // animateParticles();
+        animateParticles();
         // drawLine(0,0,10,10);
     }
 
