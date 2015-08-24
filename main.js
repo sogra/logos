@@ -6,22 +6,16 @@ var movingParticles = movingParticles || {};
 (function (context) {
 
   /***
-     * Global Variables 
+     * Global Variables
      */
     vars = {
         canvas : {},
         context : {},
-		particles : [],
-		canvasWidth : 0,
-		canvasHeight : 0,
-		movingDirection : '',
-
-        particle : {
-			x : 0,
-			y : 0,
-			radius : 2,
-			color : "#000"
-		}
+        particles : [],
+        canvasWidth : 0,
+        canvasHeight : 0,
+        movingDirection : '',
+        sograText : 'so  gra',
     };
 
 	/***
@@ -74,36 +68,46 @@ var movingParticles = movingParticles || {};
     /***
      * Returns the distance between (x1,y1) and (x2,y2)
      */
-    function animateParticles (){
-        
+    function drawScreen (){
+
         vars.context.clearRect(0, 0, vars.canvas.width, vars.canvas.height);
 
         updateParticles();
         drawParticles();
- 
+
         // var distanceBetweenDots = distance(dot1x,dot1y,dot2x,dot2y);
 
         // if(distanceBetweenDots < 232) {
         //     drawLine(dot1x,dot1y,dot2x,dot2y)
         // }
 
-        vars.animationHandler = window.requestAnimationFrame(animateParticles);
+        vars.context.fillText(vars.sograText,10,30);
+
+        vars.animationHandler = window.requestAnimationFrame(drawScreen);
     }
 
     /***
-     * Init all required functions 
+     * Init all required functions
      */
     function init () {
-        vars.canvas = document.getElementById("logoCanvas"),
-        vars.context = vars.canvas.getContext('2d');
-        vars.canvasWidth = vars.canvas.clientWidth;
-        vars.canvasHeight = vars.canvas.clientHeight;
+      // Create Canvas Element and add it to the DOM
+      vars.canvas = document.createElement('canvas');
+      vars.canvas.id = 'canvasElement';
+      vars.canvas.width = '200';
+      vars.canvas.height = '200';
+      document.getElementById('canvasContainer').appendChild(vars.canvas);
 
-        generateParticles(10);
-		console.log(vars.particles);
+      vars.context = vars.canvas.getContext('2d');
+      vars.canvasWidth = vars.canvas.clientWidth;
+      vars.canvasHeight = vars.canvas.clientHeight;
 
-        animateParticles();
-        // drawLine(0,0,10,10);
+      vars.context.font="55px Lato";
+      vars.context.fillStyle = "#707070";
+
+      generateParticles(5);
+
+      drawScreen();
+      drawLine(0,0,10,10);
     }
 
     init();
