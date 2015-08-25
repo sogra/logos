@@ -18,6 +18,7 @@ body {
     margin: 0;
     line-height: 1;
     font-family: 'Lato', sans-serif;
+    font-family: Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;
 }
 ol, ul {
     list-style: none;
@@ -41,4 +42,10 @@ table {
     width: 200px;
     margin: 0 auto;
     border: solid 1px red;
+}
+
+#canvas {
+  border: solid 1px #000;
+  margin: 0 auto;
+  display: block;
 }
